@@ -1,7 +1,6 @@
 # Salesforce SFDX Misc
 
-This repo provides tools to assist with transitioning from *Happy Soup* to DX. The
-documentation for these scripts can be found [here](/docs/DX%20Project%20Shell%20Scripts.pdf).
+This repo provides tools to assist with transitioning from *Happy Soup* to DX. 
 
 ## DX Project Shell Scripts
 This document outlines the shells scripts defined to support the DX Project initiative. 
@@ -45,6 +44,7 @@ utilize the following (tools natively found in Unix environments) aspects:
 The two non-standard tools utilized are :
 * SFDX CLI
 * Graphviz (dot)
+
 ## Configuration
 Each user is required to add the DX bin path to their PATH environment variable. At the 
 time of this writing it is not certain where these scripts will reside. 
@@ -54,3 +54,6 @@ One would add the following to their resource file (either ~/.bashrc or ~/.bash_
 
 
 ![export in bash script](/images/2_configuration.png)
+
+## Standalone Shell Scripts
+Below are the list of standalone scripts and their respective functionality. All standalone scripts provide general help (-h) and debug (-d).
