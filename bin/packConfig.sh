@@ -1,0 +1,6 @@
+#!/bin/bash
+
+PACKAGE_NAME="$1"
+DEV_HUB_ALIAS="DevHub"
+SCRATCH_ORG_ALIAS="$1-alias"
+TARGET_ORG="$2"
