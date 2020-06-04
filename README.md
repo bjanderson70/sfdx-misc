@@ -21,16 +21,16 @@ Below are a list of the shell scripts defined for the DX Project.
 |Script name	| Description |
 |------------|----------------------------------------------------------------------------|
 :---        | :--- |
-analyzeOrg.sh| Utility  analyzes a Salesforce Org |
-buildScratchOrg.sh | Utility builds a Scratch Org with needed packages (i.e. FSC) |
-createProject.sh | Utility creates a VS Code Project; seeded with an unmanaged Package from Sandbox |
-dotGen.sh | Utility to pull metadata dependencies and create a visualization (Graphviz) |
-md_used.sh | Utility to pull down the metadata used in an Org |
-sfdxUrlEncrpt.sh | Utility to encrypt a SFDX URL stored token |
-packConfig.sh | Utility to set environment variables |
-setScratchOrgJSON.sh | Utility to create a project definition file for a scratch Org |
-csvSheets.sh | Utility to create CSV files [awk] |
-filterPackages.sh | Utility to get installed package names and corresponding package Ids [awk]|
+| analyzeOrg.sh| Utility  analyzes a Salesforce Org |
+| buildScratchOrg.sh | Utility builds a Scratch Org with needed packages (i.e. FSC) |
+| createProject.sh | Utility creates a VS Code Project; seeded with an unmanaged Package from Sandbox |
+| dotGen.sh | Utility to pull metadata dependencies and create a visualization (Graphviz) |
+| md_used.sh | Utility to pull down the metadata used in an Org |
+| sfdxUrlEncrpt.sh | Utility to encrypt a SFDX URL stored token |
+| packConfig.sh | Utility to set environment variables |
+| setScratchOrgJSON.sh | Utility to create a project definition file for a scratch Org |
+| csvSheets.sh | Utility to create CSV files [awk] |
+| filterPackages.sh | Utility to get installed package names and corresponding package Ids [awk]|
 
 ## Tools Used
 In order to limit the dependencies of these shell scripts, all shell scripts (bash) 
@@ -40,6 +40,7 @@ utilize the following (tools natively found in Unix environments) aspects:
 * sed,
 * cut 
 * bash (shell script)
+
 The two non-standard tools utilized are :
 * SFDX CLI
 * Graphviz (dot)
