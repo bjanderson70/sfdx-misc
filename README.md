@@ -13,6 +13,7 @@ Understanding general functionality of SFDX CLI is needed. This comes into play 
 authorizing access to a non-ScratchOrg or ScratchOrg. Many of the commands expect a 
 username/target-name (-u) to reference the Org. For example, a common command to 
 see what Orgs (and Scratch Orgs) one has available, __sfdx force:org:list –all__:
+![export in bash script](/images/1_sfdxForceOrgList.png)
 
 ## Manifest
 Below are a list of the shell scripts defined for the DX Project.
@@ -48,4 +49,4 @@ time of this writing it is not certain where these scripts will reside.
 However, for example, if the DX project resides in the following directory 
 (and assuming a git-bash shell installation on Windows), /c/salesforce/workspaceDXProject.
 One would add the following to their resource file (either ~/.bashrc or ~/.bash_profile):
-![export in bash script](/images/logo.png)
+![export in bash script](/images/1_sfdxForceOrgList.png)
