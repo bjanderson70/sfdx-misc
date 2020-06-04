@@ -1,7 +1,7 @@
 # Salesforce SFDX Misc
 
 This repo provides tools to assist with transitioning from *Happy Soup* to DX. The
-documentation for these scripts can be found ![here](/docs/DX Project Shell Scripts.pdf).
+documentation for these scripts can be found [here](/docs/DX%20Project%20Shell%20Scripts.pdf).
 
 ## DX Project Shell Scripts
 This document outlines the shells scripts defined to support the DX Project initiative. 
