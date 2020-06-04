@@ -49,4 +49,4 @@ time of this writing it is not certain where these scripts will reside.
 However, for example, if the DX project resides in the following directory 
 (and assuming a git-bash shell installation on Windows), /c/salesforce/workspaceDXProject.
 One would add the following to their resource file (either ~/.bashrc or ~/.bash_profile):
-![export in bash script](/images/1_sfdxForceOrgList.png)
+![export in bash script](/images/2_configuration.png)
