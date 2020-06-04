@@ -19,7 +19,7 @@ see what Orgs (and Scratch Orgs) one has available, __sfdx force:org:list –all
 Below are a list of the shell scripts defined for the DX Project.
 
 |Script name	| Description |
-|------------|----------------------------------------------------------------------------|
+|------------|------------------------------------------------------------------------|
 | analyzeOrg.sh| Utility  analyzes a Salesforce Org |
 | buildScratchOrg.sh | Utility builds a Scratch Org with needed packages (i.e. FSC) |
 | createProject.sh | Utility creates a VS Code Project; seeded with an unmanaged Package from Sandbox |
