@@ -4,6 +4,11 @@
 
 # Salesforce cache
 .sfdx/
+.localdevserver/
+.vim-force.com/
+
+# LWC VSCode autocomplete
+**/lwc/jsconfig.json
 
 # Logs
 logs
@@ -14,13 +19,15 @@ yarn-error.log*
 
 # Dependency directories
 node_modules/
+uncrustify.cfg
 
 # Eslint cache
 .eslintcache
 
 # MacOS system files
 .DS_Store
-
+# Misc
+*.txt
 # Windows system files
 Thumbs.db
 ehthumbs.db
