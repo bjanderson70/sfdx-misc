@@ -8,7 +8,7 @@
 				],
     "settings": {
       "communitiesSettings": {
-          "enableNetworksEnabled": trues
+          "enableNetworksEnabled": true
       },
       "mobileSettings": {
           "enableS1EncryptedStoragePref2": false
