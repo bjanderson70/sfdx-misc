@@ -78,6 +78,7 @@ packageToIncludeLocation="$shellLocation/../res/includePackages.txt";
 soDefLocation="$shellLocation/../res/default-project-scratch-def.json"
 projectFileLocation="$shellLocation/../res/sfdx-project.json"
 packageFilter="$shellLocation/filterPackages.sh";
+sfdxProject="sfdx-project.json"
 scratchOrg=;
 scratchOrgName=;
 FCSPAckageId=;
@@ -271,7 +272,8 @@ function createScratchOrg() {
 #
 #######################################################
 function getOrgListOfNonScratchOrg(){
-	local doDelete=;
+
+	local lpwd=`pwd`;
 	# do we have a non-scratch org
 	if [ ! -z $authUser ];
 	then
@@ -279,10 +281,9 @@ function getOrgListOfNonScratchOrg(){
 		# we need to fool SFDX as it expects a sfdx-project.json.
 		# if one is not present; temporarily create one, and then remove it.
 		# Otherwise, the command does not run!
-		if [ ! -f "sfdx-project.json" ];
+		if [ ! -f "$lpwd/$sfdxProject" ];
 		then
 			cp "${projectFileLocation}" .
-			doDelete=1;
 		fi
 		# get a list of packages from the non-scratch org
 		ORG_PACKAGES_JSON=`${SFDX} force:package:installed:list -u $authUser --json` 	
@@ -290,12 +291,7 @@ function getOrgListOfNonScratchOrg(){
 		if [[  $? == 1 ]]; then
 			handleError "Issue getting package information - Command must be run from a valid project directory (sfdx-project.json does not exist)"
 		fi
-		# did we have to create a temporary project file for the comand to run?
-		# if so, delete it
-		if [ ! -z doDelete ];
-		then
-			rm sfdx-project.json >/dev/null 2>&1;
-		fi
+
 	else
 		# no non-scratch org
 		ORG_PACKAGES_JSON="";
@@ -401,7 +397,7 @@ function installPackage(){
 	highliteSFDXOutput;
 }
 #######################################################
-# Iterate over know packages
+# Iterate over known packages
 #
 #######################################################
 function iterateOverIncludeList() {

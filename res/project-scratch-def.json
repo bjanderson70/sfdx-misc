@@ -1,10 +1,13 @@
 {
     "orgName": "SCR_DXPROJECT",
     "edition": "EDITION_TYPE",
-	"features": ["MultiCurrency", "AuthorApex","StateAndCountryPicklist", "LightningSalesConsole","API",
-				"RecordTypes","SalesUser", "Knowledge", "Communities", "FinancialServicesUser:10", "FinancialServicesCommunityUser:3",
-				"ContactsToMultipleAccounts", "DebugApex","BigObjectsBulkAPI","ChangeDataCapture","PlatformCache",
-				"PersonAccounts","PlatformEncryption", "CalloutSizeMB:12"
+	"features": ["MultiCurrency","AuthorApex","StateAndCountryPicklist","SalesUser", 
+				"RecordTypes","API", "Knowledge", "Communities", "FinancialServicesUser:10", 
+				"FinancialServicesCommunityUser:3","ContactsToMultipleAccounts","DebugApex",
+				"BigObjectsBulkAPI","ChangeDataCapture","PlatformCache","PersonAccounts",
+				"PlatformEncryption", "CalloutSizeMB:12","LightningServiceConsole","Workflow",
+				"WorkflowFlowActionFeature","TransactionFinalizers","ProcessBuilder","MarketingUser",
+				"LightningSalesConsole","FieldAuditTrail","EventLogFile","DurableClassicStreamingAPI"
 				],
     "settings": {
       "communitiesSettings": {
@@ -17,22 +20,23 @@
           "enableOmniChannel": false
       },
       "caseSettings": {
-          "systemUserEmail": "support@somename.com"
+          "systemUserEmail": "support@somename.com",
+		  "emailToCase": true
       },
-	  "lightningExperienceSettings": {
+	"lightningExperienceSettings": {
             "enableS1DesktopEnabled": true
       },
-	  "chatterSettings": {
+	"chatterSettings": {
             "enableChatter": false
       },
-	  "knowledgeSettings":{
+	"knowledgeSettings":{
 			"enableKnowledge": true,
 			"enableLightningKnowledge": true
 	  },
-	  "securitySettings": {
+	"securitySettings": {
 		"sessionSettings":{
 			"sessionTimeout": "TwelveHours"
 		}
-      }
-  }
+	}
+    }
 }
