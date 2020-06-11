@@ -1,12 +1,13 @@
 {
     "orgName": "WF Scratch-Org",
     "edition": "Developer",
-	"features": ["MultiCurrency", 
-				"AuthorApex","StateAndCountryPicklist","LightningSalesConsole","SalesUser", 
+	"features": ["MultiCurrency","AuthorApex","StateAndCountryPicklist","SalesUser", 
 				"RecordTypes","API", "Knowledge", "Communities", "FinancialServicesUser:10", 
 				"FinancialServicesCommunityUser:3","ContactsToMultipleAccounts","DebugApex",
 				"BigObjectsBulkAPI","ChangeDataCapture","PlatformCache","PersonAccounts",
-				"PlatformEncryption", "CalloutSizeMB:12"
+				"PlatformEncryption", "CalloutSizeMB:12","LightningServiceConsole","Workflow",
+				"WorkflowFlowActionFeature","TransactionFinalizers","ProcessBuilder","MarketingUser",
+				"LightningSalesConsole","FieldAuditTrail","EventLogFile","DurableClassicStreamingAPI"
 				],
     "settings": {
       "communitiesSettings": {
@@ -19,7 +20,8 @@
           "enableOmniChannel": false
       },
       "caseSettings": {
-          "systemUserEmail": "support@somename.com"
+          "systemUserEmail": "support@somename.com",
+		   "emailToCase": true
       },
 	  "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true
