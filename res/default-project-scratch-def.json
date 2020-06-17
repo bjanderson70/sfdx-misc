@@ -37,6 +37,9 @@
 		"sessionSettings":{
 			"sessionTimeout": "TwelveHours"
 		}
-      }
+      },
+	  "nameSettings" : {
+		"enableMiddleName" : true
+	  }
   }
 }
