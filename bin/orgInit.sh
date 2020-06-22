@@ -41,11 +41,12 @@
 #
 #       (this script uses funcs.sh)
 #######################################################
-
+dirName=`dirname $0`;
 
 # functions to process ( order matters)
 functions=(checkForSFDX runFromRoot createScratchOrg pushToScratch setPermissions runApexTests complete openOrg)
-shellLocation=`dirname $0`;
+
+>>>>>>> Stashed changes
 #######################################################
 # soure common functions
 #
@@ -54,8 +55,8 @@ function sourceFunctions() {
     if [[ -f "funcs.sh" ]]; then
         source funcs.sh
     else
-        if [[ -f "$shellLocation/funcs.sh" ]]; then
-            source "$shellLocation/funcs.sh"
+        if [[ -f "$dirName/funcs.sh" ]]; then
+            source "$dirName/funcs.sh"
         fi
     fi
 }
