@@ -60,7 +60,7 @@ scratchOrg=
 runUnitTests=
 quietly=
 installBase=
-
+shellLocation=`basename $0`;
 #######################################################
 # Utility to  reset cursor
 #
@@ -114,7 +114,7 @@ function print(){
 #
 #######################################################
 function checkForSFDX(){
-	type $SFDX_CLI_EXEC >/dev/null 2>&1 || { handleError " $0 requires sfdx but it's not installed or found in PATH."; }
+	type $SFDX_CLI_EXEC >/dev/null 2>&1 || { handleError " $shellLocation requires sfdx but it's not installed or found in PATH."; }
 }
 #######################################################
 # Utility for help
@@ -124,7 +124,7 @@ function help() {
 
     echo "${green}${bold}"
     echo ""
-    echo "Usage: $0 [ -u <username|targetOrg> | -t | -v | -q | -h ]"
+    echo "Usage: $shellLocation [ -u <username|targetOrg> | -t | -v | -q | -h ]"
 	printf "\n\t -u <username|targetOrg>"
 	printf "\n\t -t run unit tests"
 	printf "\n\t -v turn on debug"
