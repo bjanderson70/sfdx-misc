@@ -41,16 +41,8 @@
 #######################################################
 
 # functions to process ( order matters)
-functions=(checkForSFDX\
-            runFromRoot\
-			createScratchOrg\
-			installPackages\
-            setPermissions\
-            runApexTests\
-            complete\
-            openOrg
-            )			
-
+functions=(checkForSFDX runFromRoot createScratchOrg installPackages setPermissions runApexTests complete openOrg)			
+shellLocation=`dirname $0`;
 #######################################################
 # soure common functions
 #
@@ -59,13 +51,11 @@ function sourceFunctions() {
     if [[ -f "funcs.sh" ]]; then
         source funcs.sh
     else
-        if [[ -f "./scripts/funcs.sh" ]]; then
-            source ./scripts/funcs.sh
+        if [[ -f "$shellLocation/funcs.sh" ]]; then
+            source "$shellLocation/funcs.sh"
         fi
     fi
 }
-
-
 
 #######################################################
 # MAIN
