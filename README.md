@@ -26,6 +26,8 @@ Below are a list of the shell scripts defined for the DX Project.
 | dotGen.sh | Utility to pull metadata dependencies and create a visualization (Graphviz) |
 | md_used.sh | Utility to pull down the metadata used in an Org |
 | sfdxUrlEncrpt.sh | Utility to encrypt a SFDX URL stored token |
+| orgInit.sh | Utility to create and push to Scratch Org (reading the sfdx-project.json file |
+| orgInitPackage.sh | Utility to create and deploy to an Org (reading the sfdx-project.json file |
 | packConfig.sh | Utility to set environment variables |
 | setScratchOrgJSON.sh | Utility to create a project definition file for a scratch Org |
 | csvSheets.sh | Called utility to create CSV files [awk script] |
