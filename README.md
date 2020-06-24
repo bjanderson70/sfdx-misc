@@ -43,8 +43,8 @@ utilize the following (tools natively found in Unix environments) aspects:
 * bash (shell script)
 
 The two non-standard tools utilized are :
-* SFDX CLI
-* Graphviz (dot)
+* [SFDX CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm)
+* [Graphviz (dot)](https://graphviz.gitlab.io/download/)
 
 ## Configuration
 Each user is required to add the DX bin path to their PATH environment variable. At the 
