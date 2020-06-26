@@ -46,7 +46,6 @@ dirName=`dirname $0`;
 # functions to process ( order matters)
 functions=(checkForSFDX runFromRoot createScratchOrg pushToScratch setPermissions runApexTests complete openOrg)
 
->>>>>>> Stashed changes
 #######################################################
 # soure common functions
 #
