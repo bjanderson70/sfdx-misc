@@ -27,7 +27,7 @@ Below are a list of the shell scripts defined for the DX Project.
 | md_used.sh | Utility to pull down the metadata used in an Org |
 | sfdxUrlEncrpt.sh | Utility to encrypt a SFDX URL stored token |
 | orgInit.sh | Utility to create and push to Scratch Org (reading the sfdx-project.json file |
-| orgInitPackage.sh | Utility to create and deploy to an Org (reading the sfdx-project.json file |
+| orgInitPackage.sh | Utility to deploy to an Org (reading the sfdx-project.json file |
 | packConfig.sh | Utility to set environment variables |
 | setScratchOrgJSON.sh | Utility to create a project definition file for a scratch Org |
 | csvSheets.sh | Called utility to create CSV files [awk script] |
@@ -43,8 +43,8 @@ utilize the following (tools natively found in Unix environments) aspects:
 * bash (shell script)
 
 The two non-standard tools utilized are :
-* SFDX CLI
-* Graphviz (dot)
+* [SFDX CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm)
+* [Graphviz (dot)](https://graphviz.gitlab.io/download/)
 
 ## Configuration
 Each user is required to add the DX bin path to their PATH environment variable. At the 
