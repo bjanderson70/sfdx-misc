@@ -61,6 +61,9 @@ runUnitTests=
 quietly=
 installBase=
 shellLocation=`basename $0`;
+numOfSODays="2";
+devhub=;
+
 #######################################################
 # Utility to  reset cursor
 #
@@ -124,10 +127,12 @@ function help() {
 
     echo "${green}${bold}"
     echo ""
-    echo "Usage: $shellLocation [ -u <username|targetOrg> | -t | -v | -q | -h ]"
+    echo "Usage: $shellLocation -v <Dev-Hub> [ -u <username|targetOrg> | -l <num of Days to keep Scratch Org, default to 2> | -t | -d | -q | -h ]"
 	printf "\n\t -u <username|targetOrg>"
+	printf "\n\t -v <username|targetOrg>"
+	printf "\n\t -l <# of days to keep scratch org , defaults to $numOfSODays days>"
 	printf "\n\t -t run unit tests"
-	printf "\n\t -v turn on debug"
+	printf "\n\t -d turn on debug"
     printf "\n\t -q run quietly"
     printf "\n\t -h the help\n"
     resetCursor;
@@ -139,22 +144,30 @@ function help() {
 #
 #######################################################
 function getCommandLineArgs() {
-	while getopts u:svhqtb option
+
+	while getopts u:l:v:shdqtb option
 	do
-		case "${option}"
-		in
-			u) orgName=${OPTARG};;
-			v) set -xv;;
-            s) scratchOrg=1;;
-			t) runUnitTests=1;;
-            b) installBase=1;;
-            q) quietly=1;;
-			h) help; exit 1;;
-		esac
+	   case "${option}"
+	   in
+	    u) orgName=${OPTARG};;
+	    l) numOfSODays=${OPTARG};;
+		v) devhub=${OPTARG};;
+	    d) set -xv;;
+        s) scratchOrg=1;;
+	    t) runUnitTests=1;;
+        b) installBase=1;;
+        q) quietly=1;;
+	    h) help;;
+	   esac
 	done
     #if no org, then creating a scratch org
     if [ -z $orgName ]; then
         scratchOrg=1;
+    fi
+	 #need to know dev-hub
+    if [ -z $devhub ]; then
+        handleError "Need to know the Dev-Hub when creating scratch org "
+
     fi
 }
 #######################################################
@@ -177,10 +190,10 @@ function createScratchOrg() {
     if [ ! -z $scratchOrg ]; then
         print "Creating Scratch org..."
         # get username
-        orgName=`$SFDX_CLI_EXEC force:org:create -s -f config/project-scratch-def.json -d 2 --json |  grep username | awk '{ print $2}' | sed 's/"//g'`
+        orgName=`$SFDX_CLI_EXEC force:org:create -v $devhub -s -f config/project-scratch-def.json -d $numOfSODays --json |  grep username | awk '{ print $2}' | sed 's/"//g'`
         print "Scratch org created (user=$orgName)."
 		if [  -z $orgName ]; then
-			handleError "Problem creating scratch Org (could be network issues, permissions, or limits) [sfdx force:org:create -s -f config/project-scratch-def.json -d 2 --json] "
+			handleError "Problem creating scratch Org (could be network issues, permissions, or limits) [sfdx force:org:create -s -f config/project-scratch-def.json -d $numOfSODays --json] "
 		fi
     fi
 }
@@ -195,7 +208,7 @@ function runApexTests() {
        print "Running Apex Unit Tests (target=$orgName) [w/ core-coverage]"
        # run tests
        $SFDX_CLI_EXEC force:apex:test:run -r human -c -u "$orgName" -w 30 
-     fi
+   fi
 }
 #######################################################
 # set permissions
