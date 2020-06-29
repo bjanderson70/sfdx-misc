@@ -43,7 +43,7 @@
 #######################################################
 
 # functions to process ( order matters)
-functions=(preAmble checkForSFDX createScratchOrg getLatestFSCManagedPackage getOrgListOfNonScratchOrg iterateOverIncludeList)
+functions=(preAmble checkForSFDX createScratchOrg getLatestFSCManagedPackage getOrgListOfNonScratchOrg iterateOverIncludeList setPerms)
 			
 # Keep  list of FSC packages to install ( order is important!)
 FSCOrder=('FinancialServicesCloud' 'FinancialServicesExt');
@@ -464,13 +464,23 @@ function iterateOverIncludeList() {
 	# can ensure at min. the FSC component is installed
 	if [[ "${fscInstalled}" -eq "1" && ! -z $FCSPAckageId ]];
 	then
-		# at min. we load the FSC package
-		((lstep=lstep+1));
-		installPackage "$lstep" "${KNOWN_FCS_NAME}" "$FCSPAckageId"
+	    # at min. we load the FSC package
+	    ((lstep=lstep+1));
+	    installPackage "$lstep" "${KNOWN_FCS_NAME}" "$FCSPAckageId"
 	fi
 	
 }
+#######################################################
+# Set Permissions
+#######################################################
+function setPerms() {
+    preAmbleFunction $1 "Setting Permissions in Scratch-Org"
+    if [[ "${fscInstalled}" -ne "0" && ! -z $FCSPAckageId ]];
+    then
+        sfdx force:user:permset:assign -n FinancialServicesCloudStandard
+    fi
 
+}
  #######################################################
 # MAIN
 #
