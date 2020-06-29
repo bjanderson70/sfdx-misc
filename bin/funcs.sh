@@ -216,7 +216,8 @@ function runApexTests() {
 #######################################################
 function setPermissions() {
     print "Setting up permissions."
-	# place here, if any
+    # place here, if any
+    # sfdx force:user:permset:assign -n FinancialServicesCloudStandard
 }
 #######################################################
 # Install Packages
