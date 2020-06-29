@@ -129,7 +129,7 @@ function help() {
     echo ""
     echo "Usage: $shellLocation -v <Dev-Hub> [ -u <username|targetOrg> | -l <num of Days to keep Scratch Org, default to 2> | -t | -d | -q | -h ]"
 	printf "\n\t -u <username|targetOrg>"
-	printf "\n\t -v <username|targetOrg>"
+	printf "\n\t -v <dev-hub>"
 	printf "\n\t -l <# of days to keep scratch org , defaults to $numOfSODays days>"
 	printf "\n\t -t run unit tests"
 	printf "\n\t -d turn on debug"
@@ -145,20 +145,20 @@ function help() {
 #######################################################
 function getCommandLineArgs() {
 
-	while getopts u:l:v:shdqtb option
-	do
-	   case "${option}"
-	   in
-	    u) orgName=${OPTARG};;
-	    l) numOfSODays=${OPTARG};;
-		v) devhub=${OPTARG};;
-	    d) set -xv;;
+    while getopts u:l:v:shdqtb option
+    do
+	case "${option}"
+	in
+	u) orgName=${OPTARG};;
+	l) numOfSODays=${OPTARG};;
+	v) devhub=${OPTARG};;
+	d) set -xv;;
         s) scratchOrg=1;;
-	    t) runUnitTests=1;;
+	t) runUnitTests=1;;
         b) installBase=1;;
         q) quietly=1;;
-	    h) help;;
-	   esac
+	h) help;;
+	esac
 	done
     #if no org, then creating a scratch org
     if [ -z $orgName ]; then
@@ -192,9 +192,9 @@ function createScratchOrg() {
         # get username
         orgName=`$SFDX_CLI_EXEC force:org:create -v $devhub -s -f config/project-scratch-def.json -d $numOfSODays --json |  grep username | awk '{ print $2}' | sed 's/"//g'`
         print "Scratch org created (user=$orgName)."
-		if [  -z $orgName ]; then
-			handleError "Problem creating scratch Org (could be network issues, permissions, or limits) [sfdx force:org:create -s -f config/project-scratch-def.json -d $numOfSODays --json] "
-		fi
+	if [  -z $orgName ]; then
+	    handleError "Problem creating scratch Org (could be network issues, permissions, or limits) [sfdx force:org:create -s -f config/project-scratch-def.json -d $numOfSODays --json] "
+	fi
     fi
 }
 
