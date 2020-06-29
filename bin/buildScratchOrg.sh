@@ -200,7 +200,7 @@ function getCommandLineArgs() {
 			u) authUser=${OPTARG};;
 			f) fscInstalled=1;;
 			d) set -xv;;
-			h) help; exit 1;;
+			h) help;;
 		esac
 	done
 	
