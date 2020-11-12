@@ -16,7 +16,8 @@ see what Orgs (and Scratch Orgs) one has available, __sfdx force:org:list –all
 ![sfdx force org list commeand](/images/1_sfdxForceOrgList.png)
 
 ## Manifest
-Below are a list of the shell scripts defined for the DX Project.
+Below are a list of the shell scripts defined for the DX Project. Please note, most of the shel scripts (__.sh__) can be invoked
+with help (__-h__) on the command line.
 
 |Script name	| Description |
 |------------|------------------------------------------------------------------------|

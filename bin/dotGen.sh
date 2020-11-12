@@ -169,13 +169,13 @@ function shutdown() {
 #######################################################
 function preAmble () {
 
-	if [  -z $skipAll ]
+	if [  -z ${skipAll} ]
 	then
 		clear;
 		echo "${green}${bold}"
 		echo ""
 		echo "Starting Graph configuration for user: '$USERNAME' "
-		if [ -z $filterIndex ];
+		if [ -z ${filterIndex} ];
 		then
 			printf "\n\t >No filter process for Capability Squads"
 		else
@@ -194,7 +194,7 @@ function preAmble () {
 #
 #######################################################
 function preAmbleFunction() {
-	if [  -z $skipAll ]	
+	if [  -z ${skipAll} ]	
 	then
 		echo "${yellow}"
 		printf "\t[Step $1] ... $2 ...\n"
@@ -278,7 +278,7 @@ function getCommandLineArgs() {
 	# case insensitive compare
 	local orig_nocasematch=$(shopt -p nocasematch)
 	shopt -s nocasematch
-	if [ ! -z $filterType ]; then
+	if [ ! -z ${filterType} ]; then
 		if [ "$filterType" = "s" ]; 
 		then
 			filterIndex=0;
@@ -312,7 +312,7 @@ function checkForDot(){
 #######################################################
 function printAction() {
 	
-	if [  -z "$skipAll" ]
+	if [  -z ${skipAll} ]
 	then
 		echo "${cyan}${bold}"
 		printf "\t>>>>>>$1"
@@ -355,19 +355,19 @@ function customObjectPerformParse()
 	cd $dataLocation;
 	local myfilesize=$(wc -l "./data/custom_objects.txt" | awk '{print $1}')
 	
-	if [[ (! -z $cobject) && $myfilesize -gt 3 ]]
+	if [[ (! -z ${cobject}) && $myfilesize -gt 3 ]]
 	then
 		preAmbleFunction $1 "Perform Custom Object Parsing"
 		cat ./data/custom_objects.txt | grep -v -e 'METADATACOMPONENTID' |grep -v -e ' number of records retrieved'  | grep -v -e '───────────────────'  | sed 's/\.cmp/_cmp/g' | sed 's/\.design/_design/g' | grep -v -e 'Test'  > ./data/co_prelim.txt
 		cat "$headerLocation"/header.txt > ./parsed/customObject.txt
 		# for inspection
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			cat ./data/co_prelim.txt | grep "${SquadFilters[$filterIndex]}" >>./parsed/customObject.txt
 		else
 			cat ./data/co_prelim.txt  >>./parsed/customObject.txt
 		fi
-		if [ -z $filterIndex ];
+		if [ -z ${filterIndex} ];
 		then
 			# create the color nodes
 			cat ./data/co_prelim.txt | sort | uniq | awk -v mcolor="${Colors[$cCOIndex]}" 'BEGIN { print "digraph graphname {\n rankdir=RL;\n node[shape=Mrecord, bgcolor=black, fillcolor=lightblue, style=filled];\n " } { print $2" [shape=box,style=filled,color=\"black\",fillcolor=\""mcolor"\"]"}' > ./data/co_color_for_nodes.txt
@@ -393,12 +393,12 @@ function apexPerformParse()
 { 
 	cd $dataLocation;
 	local myfilesize=$(wc -l "./data/apex_classess.txt" | awk '{print $1}')
-	if [[ (! -z $apex) && $myfilesize -gt 3 ]]
+	if [[ (! -z ${apex}) && $myfilesize -gt 3 ]]
 	then
 		preAmbleFunction $1 "Perform Apex Parsing"
 		cat ./data/apex_classess.txt | grep -v -e 'METADATACOMPONENTID' |grep -v -e ' number of records retrieved'  | grep -v -e '───────────────────'  | sed 's/\.cmp/_cmp/g' | sed 's/\.design/_design/g' | grep -v -e 'Test'  > ./data/apex_prelim.txt
 		cat "$headerLocation"/header.txt > ./parsed/apex.txt
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			# for inspection
 			cat ./data/apex_prelim.txt | grep "${SquadFilters[$filterIndex]}" >> ./parsed/apex.txt
@@ -406,7 +406,7 @@ function apexPerformParse()
 			# for inspection
 			cat ./data/apex_prelim.txt >> ./parsed/apex.txt
 		fi
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			# create the color nodes
 			cat ./data/apex_prelim.txt | grep -oh "\w*${SquadFilters[$filterIndex]}\w*" | sort | uniq | awk -v mcolor="${Colors[$cApexIndex]}" 'BEGIN { print "digraph graphname {\n rankdir=RL;\n node[shape=Mrecord, bgcolor=black, fillcolor=lightblue, style=filled];\n " } { print $1" [shape=box,style=filled,color=\"black\",fillcolor=\""mcolor"\"]"}' > ./data/apex_color_for_nodes.txt
@@ -433,12 +433,12 @@ function vfPerformParse()
 { 
 	cd $dataLocation;
 	local myfilesize=$(wc -l "./data/vf_pages.txt" | awk '{print $1}')
-	if [[ (! -z $vf) && $myfilesize -gt 3 ]]
+	if [[ (! -z ${vf}) && $myfilesize -gt 3 ]]
 	then
 		preAmbleFunction $1 "Perform VisualForce Parsing"
 		cat ./data/vf_pages.txt | grep -v -e 'METADATACOMPONENTID' |grep -v -e ' number of records retrieved'  | grep -v -e '───────────────────'  | sed 's/\.cmp/_cmp/g' | sed 's/\.design/_design/g' | grep -v -e 'Test'  > ./data/vf_prelim.txt
 		cat "$headerLocation"/header.txt > ./parsed/vf.txt
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			# for inspection
 			cat ./data/vf_prelim.txt | grep "${SquadFilters[$filterIndex]}" >> ./parsed/vf.txt
@@ -446,7 +446,7 @@ function vfPerformParse()
 			# for inspection
 			cat ./data/vf_prelim.txt >> ./parsed/vf.txt
 		fi
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			# create the color nodes
 			cat ./data/vf_prelim.txt | grep -oh "\w*${SquadFilters[$filterIndex]}\w*" | sort | uniq | awk -v mcolor="${Colors[$vfIndex]}" 'BEGIN { print "digraph graphname {\n rankdir=RL;\n node[shape=Mrecord, bgcolor=black, fillcolor=lightblue, style=filled];\n " } { print $1" [shape=box,style=filled,color=\"black\",fillcolor=\""mcolor"\"]"}' > ./data/vf_color_for_nodes.txt
@@ -474,13 +474,13 @@ function lwcPerformParse()
 	cd $dataLocation;
 	local myfilesize=$(wc -l "./data/lightning_comp.txt" | awk '{print $1}')
 
-	if [[ (! -z $lwc) && $myfilesize -gt 3 ]]
+	if [[ (! -z ${lwc}) && $myfilesize -gt 3 ]]
 	then
 		preAmbleFunction $1 "Perform Lightning Parsing"
 		cat ./data/lightning_comp.txt | grep -v -e 'METADATACOMPONENTID' | grep -v -e ' number of records retrieved'  | grep -v -e '───────────────────' | grep -v -e  '.auradoc' | grep -v -e '.svg' | sed 's/\.evt/_evt/g'|sed 's/\.cmp/_cmp/g'|grep -v -e '.css' | sed 's/\.design/_design/g' | sed 's/\.js/_js/g' | sed 's/\./_/g' | grep -v -e 'Test'  > ./data/lwc_prelim.txt
 		# for inspection
 		cat "$headerLocation"/header.txt > ./parsed/lwc.txt
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			# for inspection
 			cat ./data/lwc_prelim.txt | grep "${SquadFilters[$filterIndex]}" >> ./parsed/lwc.txt
@@ -488,7 +488,7 @@ function lwcPerformParse()
 		# fo	r inspection
 			cat ./data/lwc_prelim.txt  >> ./parsed/lwc.txt
 		fi
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			# create the color nodes
 			cat ./data/lwc_prelim.txt | grep -oh "\w*${SquadFilters[$filterIndex]}\w*"  | sort | uniq| awk -v mcolor="${Colors[$cLWCIndex]}" 'BEGIN { print "digraph graphname {\n rankdir=RL;\n node[shape=Mrecord, bgcolor=black, fillcolor=lightblue, style=filled];\n " } { print $1" [shape=box,style=filled,color=\"black\",fillcolor=\""mcolor"\"]"}' > ./data/lwc_color_for_nodes.txt
@@ -516,13 +516,13 @@ function staticResPerformParse()
 	cd $dataLocation;
 	local myfilesize=$(wc -l "./data/static_res.txt" | awk '{print $1}')
 	 
-	if [[ (! -z $staticres) && $myfilesize -gt 3 ]]
+	if [[ (! -z ${staticres}) && $myfilesize -gt 3 ]]
 	then
 		preAmbleFunction $1 "Perform Static Resource Parsing"
 		cat ./data/static_res.txt | grep -v -e 'METADATACOMPONENTID' | grep -v -e ' number of records retrieved'  | grep -v -e '───────────────────' | grep -v -e  '.auradoc' | grep -v -e '.svg' | sed 's/\.evt/_evt/g'|sed 's/\.cmp/_cmp/g'|grep -v -e '.css' | sed 's/\.design/_design/g' | sed 's/\.js/_js/g' | grep -v -e 'Test'  > ./data/sr_prelim.txt
 		# for inspection
 		cat "$headerLocation"/header.txt > ./parsed/staticRes.txt
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			# for inspection
 			cat ./data/sr_prelim.txt | grep "${SquadFilters[$filterIndex]}" >> ./parsed/staticRes.txt
@@ -530,7 +530,7 @@ function staticResPerformParse()
 			# for inspection
 			cat ./data/sr_prelim.txt >> ./parsed/staticRes.txt
 		fi
-		if [ ! -z $filterIndex ];
+		if [ ! -z ${filterIndex} ];
 		then
 			# create the color nodes
 			cat ./data/sr_prelim.txt | grep -oh "\w*${SquadFilters[$filterIndex]}\w*"  | sort | uniq| awk -v mcolor="${Colors[$cSRIndex]}" 'BEGIN { print "digraph graphname {\n rankdir=RL;\n node[shape=Mrecord, bgcolor=black, fillcolor=lightblue, style=filled];\n " } { print $1" [shape=box,style=filled,color=\"black\",fillcolor=\""mcolor"\"]"}' > ./data/sr_color_for_nodes.txt
@@ -573,7 +573,7 @@ function createGraph(){
 		
 		cd  "$dataLocation/png"
 		# generate graph
-		if [ ! -z $apex ]
+		if [ ! -z ${apex} ]
 		then
 			
 			preAmbleFunction $step "Creating Graph file: '$apexGVOUT'"
@@ -581,14 +581,14 @@ function createGraph(){
 			dot -Tsvg -o$apexGVOUT apex_dot.dot
 			((step=step+1));
 		fi
-		if [ ! -z $lwc ]
+		if [ ! -z ${lwc} ]
 		then
 			preAmbleFunction $step "Creating Graph file: '$lwcGVOUT'"
 			rm -rf $lwcGVOUT
 			dot -Tsvg -o$lwcGVOUT lwc_dot.dot
 			((step=step+1));
 		fi
-		if [ ! -z $cobject ]
+		if [ ! -z ${cobject} ]
 		then
 			
 			preAmbleFunction $step "Creating Graph file: '$coGVOUT'"
@@ -596,14 +596,14 @@ function createGraph(){
 			dot -Tsvg -o$coGVOUT co_dot.dot
 			((step=step+1));
 		fi
-		if [ ! -z $staticres ]
+		if [ ! -z ${staticres} ]
 		then
 			preAmbleFunction $step "Creating Graph file: '$srGVOUT'"
 			rm -rf $srGVOUT
 			dot -Tsvg -o$srGVOUT sr_dot.dot
 			((step=step+1));
 		fi
-		if [ ! -z $vf ]
+		if [ ! -z ${vf} ]
 		then
 			preAmbleFunction $step "Creating Graph file: '$vfGVOUT'"
 			rm -rf $vfGVOUT

@@ -34,28 +34,78 @@
 # Used to set the 'project-scratch-def.json' file
 #
 ############################################################################
-name=$1;
-edition=$2;
+
+defName='Unknown-Scratch-Org-Name'
+defEdition='Enterprise'
+
+name=${1:-$defName} 
+edition=${2:-$defEdition} 
 shellLoc=$3;
 packLoc=$4;
 
-if [ -z "$name" ]
-  then
-    name='Unknown-Scratch-Org-Name';
+#
+# Help
+#
+function Help()
+{
+    
+    echo
+    echo "Requires 4 command line arguments to update 'project-scratch-def.json'..."
+    echo
+    echo "     Command line Order:"
+    echo "      1) Name of Scratch Org"
+    echo "      2) Scratch Org Edition (i.e. Developer, Enterprise ...)"
+    echo "      3) Shell Location"
+    echo "      4) Package Location to update 'project-scratch-def.json'"
+    exit;
+}
+#
+# Command Line Help
+#
+# Get the options
+while getopts ":h:d" option; do
+   case $option in
+      h) # display Help
+         Help;;
+   esac
+done
+ 
+#
+# Error if arguments not set
+#
+if [ "$#" -lt 2 ]; then
+    Help
 fi
-if [ -z "$edition" ]
-  then
-    edition='Developer';
+
+#
+# May not pass in ALL arguments
+#
+if [ "$#" -eq 2 ]; then
+  name=${defName}
+  edition=${defEdition}
+  shellLoc=$1
+  packLoc=$2
 fi
-if [ -z "$shellLoc" ]
+
+
+if [ -z "${name}" ]
   then
-    echo "Invalid Shell Location";
-    exit -1;
+    name=${defName};
 fi
-if [ -z "$packLoc" ]
+if [ -z "${edition}" ]
   then
-	echo "Invalid Package Location";
-    exit -1;
+    edition=${defEdition} 
+fi
+
+if [ -z ${shellLoc} ]
+  then
+    echo "Error: Invalid Shell Location";
+    Help
+fi
+if [ -z ${packLoc} ]
+  then
+	echo "Error: Invalid Package Location";
+  Help
 fi
 
 COMMAND=`echo sed -e '/orgName/s/SCR_DXPROJECT/\$name/' -e '/edition/s/EDITION_TYPE/$edition/' $shellLoc/../res/project-scratch-def.json`

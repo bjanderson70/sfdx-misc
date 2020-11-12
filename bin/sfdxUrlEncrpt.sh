@@ -74,7 +74,7 @@ decrypt=
 #######################################################
 function preAmble () {
 
-	if [  -z $skipAll ]
+	if [  -z ${skipAll} ]
 	then
 		clear;
 		echo "${green}${bold}"
@@ -90,7 +90,7 @@ function preAmble () {
 #
 #######################################################
 function preAmbleFunction() {
-	if [  -z $skipAll ]	
+	if [  -z ${skipAll} ]	
 	then
 		echo "${yellow}"
 		printf "\t[Step $1] ... $2 ...\n"
@@ -104,7 +104,7 @@ function preAmbleFunction() {
 
 function printAction() {
 	
-	if [  -z "$skipAll" ]
+	if [  -z ${skipAll} ]
 	then
 		echo "${cyan}${bold}"
 		printf "\t>>>>>>$1"
@@ -166,7 +166,7 @@ function handleError() {
 function shutdown() {
   tput cnorm # reset cursor
   rm -f .data$$un .result$$sn >/dev/null 2>&1
-  if [ -z $decrypt ]; then
+  if [ -z ${decrypt} ]; then
 	rm -f  "$encryptFile" >/dev/null 2>&1
   fi
 
@@ -227,10 +227,10 @@ function getCommandLineArgs() {
 			h) help; exit 1;;
 		esac
 	done
-	if [[ ! -z $authUser && ! -z $secretKey  && ! -z $encryptFile ]]; then		
+	if [[ ! -z ${authUser} && ! -z ${secretKey}  && ! -z ${encryptFile} ]]; then		
 		skipAll=1;
 	fi
-	if [[ ! -z $decrypt && ! -z $secretKey  && ! -z $encryptFile ]]; then		
+	if [[ ! -z ${decrypt} && ! -z ${secretKey}  && ! -z ${encryptFile} ]]; then		
 		skipAll=1;
 	fi
 	
@@ -240,7 +240,7 @@ function getCommandLineArgs() {
 #
 #######################################################
 function getUsernames() {
-	if [[  -z $authUser && -z $decrypt ]]; then	
+	if [[  -z ${authUser} && -z ${decrypt} ]]; then	
 		sfdx force:org:list --json > .data$$un
 		jq '.result.nonScratchOrgs | .[].username' .data$$un > .result$$sn
 		jq '.result.scratchOrgs | .[].username' .data$$un >> .result$$sn
@@ -285,13 +285,13 @@ function getUsernames() {
 #######################################################
 function getSecretKey() {
 
-	if [ -z $secretKey ]; then	
+	if [ -z ${secretKey} ]; then	
 		while true; do
 	
 			printf "${green}\tSecret key (used to encrypt urltoken)?:${red}";  
 			read -r sel;
 			
-			if [ -z $sel ]; then
+			if [ -z ${sel} ]; then
 				echo "${red}";printf "\tPlease provide a valid key"; echo "${yellow}";
 			else 
 				secretKey="$sel"
@@ -306,14 +306,14 @@ function getSecretKey() {
 #
 #######################################################
 function performEncryption() {
-	if [ -z $decrypt ]; then
-		if [ -z $authUser ]; then	
+	if [ -z ${decrypt} ]; then
+		if [ -z ${authUser} ]; then	
 			handleError "	$0 requires a valid username.";
 		fi
-		if [ -z "$secretKey" ]; then	
+		if [ -z "${secretKey}" ]; then	
 			handleError "	$0 requires a valid secret key.";
 		fi
-		if [ -z "$encryptFile" ]; then	
+		if [ -z "${encryptFile}" ]; then	
 			handleError "	$0 requires a valid encryption file to store auth url.";
 		fi
 		 
@@ -332,10 +332,10 @@ function performEncryption() {
 function performDecryption() {
 
 	if [ ! -z $decrypt ]; then
-		if [ -z "$secretKey" ]; then	
+		if [ -z "${secretKey}" ]; then	
 			handleError "	$0 requires a valid secret key.";
 		fi
-		if [ -z "$encryptFile" ]; then	
+		if [ -z "${encryptFile}" ]; then	
 			handleError "	$0 requires a valid encryption file to store auth url.";
 		fi
 	fi
