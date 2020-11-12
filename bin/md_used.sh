@@ -87,7 +87,7 @@ function handleError() {
 #######################################################
 function printAction() {
 	
-	if [  -z "$skipAll" ]
+	if [  -z ${skipAll} ]
 	then
 		echo "${cyan}${bold}"
 		printf "\t>>>>>>$1"
@@ -150,7 +150,7 @@ function getCommandLineArgs() {
 		esac
 	done
 
-	if [  -z $authUser ];
+	if [  -z ${authUser} ];
 	then
 		handleError "User/Alias/Target-Node required; \n\tUsage: $0 [ -u <username> | -d |  -h ]";
 	fi

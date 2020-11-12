@@ -170,10 +170,10 @@ function getCommandLineArgs() {
 	then
 		curDir=$curDir/..;
 	fi
-	if [[ ! -z $authUser && ! -z $dxproject && ! -z $sfPackages ]]; then
+	if [[ ! -z ${authUser} && ! -z ${dxproject} && ! -z ${sfPackages} ]]; then
 		skipAll=1;
 	fi
-	if [[ ! -z $sfPackages && ! -z $packageLoc ]]; then
+	if [[ ! -z ${sfPackages} && ! -z ${packageLoc} ]]; then
 		packageLoc="$curDir/$sfPackages";
 	fi
 	 
@@ -190,7 +190,7 @@ function cursorBack() {
 #
 #######################################################
 function spinner() {
-	if [  -z "$skipAll" ]
+	if [  -z ${skipAll} ]
 	then
 	  # make sure we use non-unicode character type locale 
 	  # (that way it works for any locale as long as the font supports the characters)
@@ -224,7 +224,7 @@ function jsonValue() {
 	num=$2
 	list=$3
 	
-	if [ -z "$list" ];
+	if [ -z ${list} ];
 	then
 		local func_result=`echo "$oAuthList" | awk -F"[,:}]" '{for(i=1;i<=NF;i++){if($i~/'$KEY'\042/){print $(i+1)}}}' | tr -d '"' | sed -n ${num}p`;
 	else
@@ -238,7 +238,7 @@ function jsonValue() {
 #
 #######################################################
 function preAmbleFunction() {
-	if [  -z $skipAll ]	
+	if [  -z ${skipAll} ]	
 	then
 		echo "${yellow}"
 		printf "\t[Step $1] ... $2 ...\n"
@@ -250,7 +250,7 @@ function preAmbleFunction() {
 #######################################################
 function preAmble () {
 
-	if [  -z $skipAll ]
+	if [  -z ${skipAll} ]
 	then
 		clear;
 		echo "${green}${bold}"
@@ -271,7 +271,7 @@ function preAmble () {
 #######################################################
 function printAction() {
 	
-	if [  -z "$skipAll" ]
+	if [  -z ${skipAll} ]
 	then
 		echo "${cyan}${bold}"
 		printf "\t>>>>>>$1"
@@ -285,7 +285,7 @@ function printAction() {
 #######################################################
 function resetCursor() {
 	
-	if [  -z "$skipAll" ]
+	if [  -z ${skipAll} ]
 	then
 		echo "${reset}" 
 	fi
@@ -322,14 +322,14 @@ function checkForSFDX(){
 #######################################################
 function oAuthWeb() {
 
-	if [ -z "$authUser" ]
+	if [ -z ${authUser} ]
 	then
 		preAmbleFunction $1 "OAuth Web Access (The Org where Unmanaged Package was created)"
 		while true; do
 	
 			printf "\t[P]roduction,[S]andbox, [N]one (p/s/y)?:${red}";  
 			read -r orgType;
-			if [ -z "$orgType" ]
+			if [ -z ${orgType} ]
 			then
 				break;
 			fi
@@ -340,7 +340,7 @@ function oAuthWeb() {
 				* ) echo "${red}";printf "\tPlease answer 'p', 's' or 'n'."; echo "${yellow}";;
 			esac
 		done
-		if [ -z "$orgOAuth" ]
+		if [ -z ${orgOAuth} ]
 		then
 			printAction "No OAuth Org defined"
 		else
@@ -353,7 +353,7 @@ function oAuthWeb() {
 			#
 			result=`eval ${COMMAND}`
 			# use alias
-			if [ ! -z $result ];
+			if [ ! -z ${result} ];
 			then
 				authUser=$result
 			fi
@@ -369,7 +369,7 @@ function oAuthWeb() {
 
 function createProject() {
 	
-	if [ -z "$dxproject" ]
+	if [ -z ${dxproject} ]
 	then
 		preAmbleFunction $1 "New Project used to create Unlocked Package "
 
@@ -378,7 +378,7 @@ function createProject() {
 			printf "\tProject Name?:${red}";  
 			read -r project;
 			 
-			if [[ -d "$project" && ! -z $overwriteDir ]]
+			if [[ -d "$project" && ! -z ${overwriteDir} ]]
 			then
 				printf "\t${bold}${cyan}Error:Directory ${red}$project${cyan} exists. Pick another name.\n" ;
 				resetCursor;
@@ -400,7 +400,7 @@ function createProject() {
 		
 	fi
 	# do we overwrite
-	if [[ -z $overwriteDir && -d "$dxproject" ]];
+	if [[ -z ${overwriteDir} && -d "$dxproject" ]];
 	then
 		handleError "Project exists ($dxproject). Need to specify -o on command line to overwrite existing project."
 	fi
@@ -424,7 +424,7 @@ function targetOrg( ) {
 		printf "\tTarget Org (if known)?:${red}"; 
 		read -r target;
 		echo "${yellow}"
-		if [ -z $target ]
+		if [ -z ${target} ]
 		then
 			break;
 		fi
@@ -438,7 +438,7 @@ function targetOrg( ) {
 		esac
 	
 	done
-	if [ -z $target ]
+	if [ -z ${target} ]
 	then
 		printAction "No Target Org defined"
 	else
@@ -454,7 +454,7 @@ function targetOrg( ) {
 #######################################################
 function sfPackages( ) {
  
-	if [ -z "$sfPackages" ]
+	if [ -z ${sfPackages} ]
 	then
 		preAmbleFunction $1 "Salesforce Unmanaged Package (Only one package)"
 
@@ -462,7 +462,7 @@ function sfPackages( ) {
 			printf "\tProvide Name of Package (if any)?:${red}"; 
 			read -r sfpacks;
 			echo "${yellow}"
-			if [ -z "$sfpacks" ]
+			if [ -z ${sfpacks} ]
 			then
 				break;
 			fi
@@ -476,7 +476,7 @@ function sfPackages( ) {
 			esac
 		
 		done
-		if [ -z "$sfpacks" ]
+		if [ -z ${sfpacks} ]
 		then
 			printAction "No SF Packages defined"
 		else
@@ -505,7 +505,7 @@ function convertMDToSource(){
 	if [ ! -z "$sfPackages" ]
 	then  
 		proj="'""$sfPackages""'"
-		if [  -z "$skipAll" ]
+		if [  -z ${skipAll} ]
 		then
 			echo "${green}${bold}"
 			echo ""
@@ -540,7 +540,7 @@ function createScrathConfiguration() {
 #######################################################
 function createScratchAndTest() {
 
-	if [ ! -z $runUnitTests ];
+	if [ ! -z ${runUnitTests} ];
 	then
 		preAmbleFunction $1 "Get scratch Org, and run unit tests"
 		#echo "==>  $packageLoc"

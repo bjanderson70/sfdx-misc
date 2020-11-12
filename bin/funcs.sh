@@ -87,7 +87,7 @@ function handleError() {
 #######################################################
 function runFromRoot() {
 	local cdir=`pwd | grep "/scripts"`
-    if [ ! -z $cdir ]; then
+    if [ ! -z ${cdir} ]; then
        cd ../;
     fi
     userDir=`pwd`;
@@ -107,7 +107,7 @@ function shutdown() {
 #
 #######################################################
 function print(){
-    if [ -z $quietly ]; then
+    if [ -z ${quietly} ]; then
         echo "${green}${bold}$1";
         resetCursor;
     fi
@@ -147,25 +147,25 @@ function getCommandLineArgs() {
 
     while getopts u:l:v:shdqtb option
     do
-	case "${option}"
-	in
-	u) orgName=${OPTARG};;
-	l) numOfSODays=${OPTARG};;
-	v) devhub=${OPTARG};;
-	d) set -xv;;
+        case "${option}"
+        in
+        u) orgName=${OPTARG};;
+        l) numOfSODays=${OPTARG};;
+        v) devhub=${OPTARG};;
+        d) set -xv;;
         s) scratchOrg=1;;
-	t) runUnitTests=1;;
+        t) runUnitTests=1;;
         b) installBase=1;;
         q) quietly=1;;
-	h) help;;
-	esac
+        h) help;;
+        esac
 	done
     #if no org, then creating a scratch org
-    if [ -z $orgName ]; then
+    if [ -z ${orgName} ]; then
         scratchOrg=1;
     fi
 	 #need to know dev-hub
-    if [ -z $devhub ]; then
+    if [ -z ${devhub} ]; then
         handleError "Need to know the Dev-Hub when creating scratch org "
 
     fi
@@ -187,12 +187,12 @@ function isCIEnvironment() {
 #######################################################
 function createScratchOrg() {
     
-    if [ ! -z $scratchOrg ]; then
+    if [ ! -z ${scratchOrg} ]; then
         print "Creating Scratch org..."
         # get username
         orgName=`$SFDX_CLI_EXEC force:org:create -v $devhub -s -f config/project-scratch-def.json -d $numOfSODays --json |  grep username | awk '{ print $2}' | sed 's/"//g'`
         print "Scratch org created (user=$orgName)."
-	if [  -z $orgName ]; then
+	if [  -z ${orgName} ]; then
 	    handleError "Problem creating scratch Org (could be network issues, permissions, or limits) [sfdx force:org:create -s -f config/project-scratch-def.json -d $numOfSODays --json] "
 	fi
     fi
@@ -204,7 +204,7 @@ function createScratchOrg() {
 #######################################################
 function runApexTests() {
     
-   if [ ! -z $runUnitTests ]; then
+   if [ ! -z ${runUnitTests} ]; then
        print "Running Apex Unit Tests (target=$orgName) [w/ core-coverage]"
        # run tests
        $SFDX_CLI_EXEC force:apex:test:run -r human -c -u "$orgName" -w 30 
@@ -225,7 +225,7 @@ function setPermissions() {
 #######################################################
 function installPackages() {
 
-    if [ ! -z $orgName ]; then
+    if [ ! -z ${orgName} ]; then
         local step=0;
         
         # get our package ids ( do not want to keep updating this script)
@@ -244,7 +244,7 @@ function installPackages() {
 #
 #######################################################
 function pushToScratch() {
-    if [ ! -z $orgName ]; then
+    if [ ! -z ${orgName} ]; then
         print "pushing content to scratch org ..."
         $SFDX_CLI_EXEC force:source:push -u "$orgName"
     fi
@@ -254,7 +254,7 @@ function pushToScratch() {
 #
 #######################################################
 function openOrg() {
-    if [ ! -z $orgName ]; then
+    if [ ! -z ${orgName} ]; then
         print "Launching Org now ..."
         $SFDX_CLI_EXEC force:org:open -u "$orgName"
     fi

@@ -125,7 +125,7 @@ function shutdown() {
   tput cnorm # reset cursor
   cd $curDir
   # remove temp file
-  if [ ! -z $tmpfile ];
+  if [ ! -z ${tmpfile} ];
   then
 	rm -f "${tmpfile}"  >/dev/null 2>&1;
   fi
@@ -137,7 +137,7 @@ function shutdown() {
 #######################################################
 function preAmble () {
 
-	if [  -z $skipAll ]
+	if [  -z ${skipAll} ]
 	then
 		clear;
 		echo "${green}${bold}"
@@ -156,7 +156,7 @@ function preAmble () {
 #
 #######################################################
 function preAmbleFunction() {
-	if [  -z $skipAll ]	
+	if [  -z ${skipAll} ]	
 	then
 		echo "${yellow}"
 		printf "\t[Step $1] ... $2 [please wait]...\n"
@@ -226,7 +226,7 @@ function checkForSFDX(){
 #######################################################
 function printAction() {
 	
-	if [  -z "$skipAll" ]
+	if [  -z ${skipAll} ]
 	then
 		echo "${cyan}${bold}"
 		printf "\t>>>>>>$1"
@@ -254,13 +254,13 @@ function highliteSFDXOutput() {
 function createScratchOrg() {
     
 	# do we need to creaet scratch org
-    if [ -z $soUser ]; then
+    if [ -z ${soUser} ]; then
         preAmbleFunction $1 "Creating Scratch org..."
         # get username
         soUser=`${SFDX} force:org:create -s -f $soDefLocation -d 2 --json |  grep username | awk '{ print $2}' | sed 's/"//g'`
 	fi
 	# if we created a scratch org, ensure it is done
-	if [[ -z $soUser || $? == 1 ]]; then
+	if [[ -z ${soUser} || $? == 1 ]]; then
 		handleError "Check Scratch Org Definition File - Unable to create Scratch Org from definition [$soDefLocation]"
 	else
 		# all good
@@ -275,7 +275,7 @@ function getOrgListOfNonScratchOrg(){
 
 	local lpwd=`pwd`;
 	# do we have a non-scratch org
-	if [ ! -z $authUser ];
+	if [ ! -z ${authUser} ];
 	then
 		preAmbleFunction $1 "Getting Packages Installed in Non-Scratch-Org"
 		# we need to fool SFDX as it expects a sfdx-project.json.
@@ -305,7 +305,7 @@ function getLatestFSCManagedPackage(){
 	preAmbleFunction $1 "Getting Latest FSC Package Id"
 	# filter out the redirect to get the package id
 	FCSPAckageId=`curl --location $knownFSCManagedPackageURI 2>/dev/null | grep "window.location.href"| grep 04t | cut -d '=' -f 3 | sed "s/['|;]*//g"`;
-	if [ -z $FCSPAckageId ]; then
+	if [ -z ${FCSPAckageId} ]; then
 		handleError "Unable to get the latest FSC Package Id"
 	else
 		printAction "Found latest FSC Package Id - $FCSPAckageId"
@@ -330,16 +330,16 @@ function processIncludedPackages() {
 			 name=`echo $line | tr -d ' "' | awk  'BEGIN{FS=":"; } { $1=""; print $0;}' | sed 's/^ *//g'`;
 
 			# match names ( strip of all spaces and quotes)
-			if [[ -z $1 || "$name" == "$1" ]];
+			if [[ -z "$1" || "$name" == "$1" ]];
 			then				
 				# remove spaces
 				name=`echo $name  | sed -e 's/\s\+/-/g'`;
 				 
 				# do we already KNOW the package Id
-				if [[ -z $2 && ! -z $pkgId ]];
+				if [[ -z "$2" && ! -z ${pkgId} ]];
 				then
 					echo "$pkgId:$name" >> "${tmpfile}"
-				elif [ ! -z $2 ];
+				elif [ ! -z "$2" ];
 				then
 					# save package id and name
 					echo "$2:$name" >> "${tmpfile}"
@@ -347,7 +347,7 @@ function processIncludedPackages() {
 				# if nothing was passed in we know that we want to ignore
 				# data from a non-scratch org and process what is in the 
 				# included packages
-				if [ ! -z $1 ];
+				if [ ! -z "$1" ];
 				then
 					break;
 				fi
@@ -367,7 +367,7 @@ function processPackages() {
 	touch "${tmpfile}"
 	 
 	# do we have any preinstalled packages?
-	if [ ! -z $1  ];
+	if [ ! -z "$1"  ];
 	then
 		# iterate over the found packages ( they are not in order, just save to file)
 		while read line ; do
@@ -436,7 +436,7 @@ function iterateOverIncludeList() {
 					pkgId=`echo $line | awk  'BEGIN{FS=":" } {print $1}'`
 					pgkName=`echo $line |  awk  'BEGIN{FS=":" } {print $2}'`
 					# here we substitute the latest FSC Package Id ( otherwise, we could get deprecated comments)
-					if [[ "${pgkName}" = "${fscOrder}" && "${fscOrder}" = "${KNOWN_FCS_NAME}" && ! -z $FCSPAckageId ]];
+					if [[ "${pgkName}" = "${fscOrder}" && "${fscOrder}" = "${KNOWN_FCS_NAME}" && ! -z ${FCSPAckageId} ]];
 					then
 						pkgId=$FCSPAckageId
 						# mark that we are going to installed ( no need to do twice!)
@@ -462,7 +462,7 @@ function iterateOverIncludeList() {
 		rm "${tmpfile}" >/dev/null 2>&1;
 	fi
 	# can ensure at min. the FSC component is installed
-	if [[ "${fscInstalled}" -eq "1" && ! -z $FCSPAckageId ]];
+	if [[ "${fscInstalled}" -eq "1" && ! -z ${FCSPAckageId} ]];
 	then
 	    # at min. we load the FSC package
 	    ((lstep=lstep+1));
@@ -475,7 +475,7 @@ function iterateOverIncludeList() {
 #######################################################
 function setPerms() {
     preAmbleFunction $1 "Setting Permissions in Scratch-Org"
-    if [[ "${fscInstalled}" -ne "0" && ! -z $FCSPAckageId ]];
+    if [[ "${fscInstalled}" -ne "0" && ! -z ${FCSPAckageId} ]];
     then
         sfdx force:user:permset:assign -n FinancialServicesCloudStandard
     fi

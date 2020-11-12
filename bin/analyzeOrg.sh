@@ -137,7 +137,7 @@ function preAmble () {
 #
 #######################################################
 function preAmbleFunction() {
-	if [  -z $skipAll ]	
+	if [  -z ${skipAll} ]	
 	then
 		echo "${yellow}"
 		printf "\t[Step $1] ... $2 ...\n"
@@ -178,7 +178,7 @@ function getCommandLineArgs() {
 		esac
 	done
 	# require auth user
-	if [  -z $authUser ];
+	if [  -z ${authUser} ];
 	then
 		handleError "User/Alias/Target-Node required; \n\tUsage: $shellScript [ -u <username> | -l <directory-location-write-data> [defaults to current dir] | -d |  -h ]";
 	fi
@@ -235,7 +235,7 @@ function packagesInstalled(){
 
 function runMetadataDependencies(){
 	# run metadata dependencies and dot generator
-	if [ ! -z $runmd ];
+	if [ ! -z ${runmd} ];
 	then
 	  # get metadata
 	  md_used.sh -u "$authUser" -l "$curDir" 
