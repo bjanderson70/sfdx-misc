@@ -1,45 +1,12 @@
 {
     "orgName": "WF Scratch-Org",
-    "edition": "Developer",
+    "edition": "Enterprise",
 	"features": ["MultiCurrency","AuthorApex","StateAndCountryPicklist","SalesUser", 
-				"RecordTypes","API", "Knowledge", "Communities", "FinancialServicesUser:10", 
+				"RecordTypes","API", "Knowledge", "Communities", "FinancialServicesUser:3", 
 				"FinancialServicesCommunityUser:3","ContactsToMultipleAccounts","DebugApex",
 				"BigObjectsBulkAPI","ChangeDataCapture","PlatformCache","PersonAccounts",
 				"PlatformEncryption", "CalloutSizeMB:12","LightningServiceConsole","Workflow",
-				"WorkflowFlowActionFeature","TransactionFinalizers","ProcessBuilder","MarketingUser",
+				"WorkflowFlowActionFeature","ProcessBuilder","MarketingUser",
 				"LightningSalesConsole","FieldAuditTrail","EventLogFile","DurableClassicStreamingAPI"
-				],
-    "settings": {
-      "communitiesSettings": {
-          "enableNetworksEnabled": true
-      },
-      "mobileSettings": {
-          "enableS1EncryptedStoragePref2": false
-      },
-      "omniChannelSettings": {
-          "enableOmniChannel": false
-      },
-      "caseSettings": {
-          "systemUserEmail": "support@somename.com",
-		   "emailToCase": true
-      },
-	  "lightningExperienceSettings": {
-            "enableS1DesktopEnabled": true
-      },
-	  "chatterSettings": {
-            "enableChatter": false
-      },
-	  "knowledgeSettings":{
-			"enableKnowledge": true,
-			"enableLightningKnowledge": true
-	  },
-	  "securitySettings": {
-		"sessionSettings":{
-			"sessionTimeout": "TwelveHours"
-		}
-      },
-	  "nameSettings" : {
-		"enableMiddleName" : true
-	  }
-  }
+				]
 }

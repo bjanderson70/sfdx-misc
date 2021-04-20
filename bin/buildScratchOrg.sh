@@ -83,6 +83,8 @@ scratchOrg=;
 scratchOrgName=;
 FCSPAckageId=;
 tmpfile=;
+devHub=;
+numOfDays=2;
 #######################################################
 # Global values discovered
 #######################################################
@@ -182,6 +184,7 @@ function help() {
 	printf "\n\t -u <source|username> [Source of a NON-Scratch-Org, if any]"
 	printf "\n\t -f [ensures the FSC package is installed]"
 	printf "\n\t -d debug"
+	printf "\n\t -v <dev-hub>"
 	printf "\n\t -h the help\n"
     resetCursor;
 	exit 0
@@ -200,6 +203,7 @@ function getCommandLineArgs() {
 			u) authUser=${OPTARG};;
 			f) fscInstalled=1;;
 			d) set -xv;;
+			v) devHub=${OPTARG};;
 			h) help;;
 		esac
 	done
@@ -255,9 +259,20 @@ function createScratchOrg() {
     
 	# do we need to creaet scratch org
     if [ -z ${soUser} ]; then
+		devInformation='';
+		# is there a dev-hub?
+	    if [ ! -z ${devHub} ]; then
+			devInformation=' -v  ${devHub} '
+		fi
         preAmbleFunction $1 "Creating Scratch org..."
         # get username
-        soUser=`${SFDX} force:org:create -s -f $soDefLocation -d 2 --json |  grep username | awk '{ print $2}' | sed 's/"//g'`
+        #soUser=`${SFDX} force:org:create -s -f ${soDefLocation} -d ${numOfDays} ${devInformation} --json |  grep username | awk '{ print $2}' | sed 's/"//g'`
+		soUser=`${SFDX} force:org:create -s -f ${soDefLocation} -d ${numOfDays} ${devInformation} --json`
+		if [[ $? == 1 ]]; then
+		    handleError "Exception from SFDX : [$soUser]"
+		else
+			soUser=`cat ${soUser} |  grep username | awk '{ print $2}' | sed 's/"//g'`
+		fi
 	fi
 	# if we created a scratch org, ensure it is done
 	if [[ -z ${soUser} || $? == 1 ]]; then
